@@ -66,3 +66,8 @@ select * from movies;      #Selects the entire movie table
 select title, release_year from movies
 order by release_year;     #Sorts the release year in ascending order of each movie.
 
+create table reviewers     #Created the table for Reviewers. The schema for this table is below:
+(id int primary key, first_name varchar(30), last_name varchar(40)); 
+
+
+
