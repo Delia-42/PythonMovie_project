@@ -60,3 +60,9 @@ insert into movies values #Created values for the movies table.
 (48,"Senior Year",2022,"Comedy"),
 (49,"The Goonies",1985,"Adventure"),
 (50,"Beetlejuice",1988,"Comedy");
+
+select * from movies;      #Selects the entire movie table
+
+select title, release_year from movies
+order by release_year;     #Sorts the release year in ascending order of each movie.
+
