@@ -1,0 +1,112 @@
+import mysql.connector
+
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="Thidwick108*",
+    database="movie_ratings_project"
+)
+mycursor = db.cursor()
+def Q_Drama():
+    mycursor.execute('select title, genre from movies where genre = "drama";')
+    for x in mycursor:
+        print(x)
+
+def Q_Horror():
+    mycursor.execute('select title, genre from movies where genre = "horror";')
+    for x in mycursor:
+        print(x)
+
+def Q_Comedy():
+    mycursor.execute('select title, genre from movies where genre = "comedy";')
+    for x in mycursor:
+        print(x)
+
+def Q_Adventure():
+    mycursor.execute('select title, genre from movies where genre = "adventure";')
+    for x in mycursor:
+        print(x)
+
+def Q_Action():
+    mycursor.execute('select title, genre from movies where genre = "action";')
+    for x in mycursor:
+        print(x)
+
+
+def H_Ratings():
+    mycursor.execute('SELECT title, genre, MAX(rating) FROM ratings INNER JOIN movies ON movies.id = ratings.movie_id Where genre = "Horror" Group By title ORDER BY rating DESC LIMIT 3;')
+    for x in mycursor:
+        print(x)
+
+def D_Ratings():
+    mycursor.execute('SELECT title, genre, MAX(rating) FROM ratings INNER JOIN movies ON movies.id = ratings.movie_id Where genre = "Drama" Group By title ORDER BY rating DESC LIMIT 3;')
+    for x in mycursor:
+        print(x)
+
+def C_Ratings():
+    mycursor.execute('SELECT title, genre, MAX(rating) FROM ratings INNER JOIN movies ON movies.id = ratings.movie_id Where genre = "Comedy" Group By title ORDER BY rating DESC LIMIT 3;')
+    for x in mycursor:
+        print(x)
+
+def AD_Ratings():
+    mycursor.execute('SELECT title, genre, MAX(rating) FROM ratings INNER JOIN movies ON movies.id = ratings.movie_id Where genre = "Adventure" Group By title ORDER BY rating DESC LIMIT 3;')
+    for x in mycursor:
+        print(x)
+
+def AC_Ratings():
+    mycursor.execute('SELECT title, genre, MAX(rating) FROM ratings INNER JOIN movies ON movies.id = ratings.movie_id Where genre = "Action" Group By title ORDER BY rating DESC LIMIT 3;')
+    for x in mycursor:
+        print(x)
+
+def startup():                                  
+    while True:                               
+        print("Ahoy, there! To see a list of movies available, please select a genre to explore. \n Please input a number between 1-5. \n If you would like to see the top rated movies of each genre please input 6. \n Or input 7 if you wish to leave.")  
+        print("\t1. Drama")
+        print("\t2. Horror")
+        print("\t3. Comedy")
+        print("\t4. Adventure")
+        print("\t5. Action")
+        print("\t6. Top_Rated")
+        print("\t7. Quit")
+        
+        while True:
+            try:
+                sel = int(input("\nSelection: "))       # take the user input for the selection
+            except ValueError:
+                print(ValueError)
+                print("Please Enter a digit from 1-6:")
+            else:
+                break
+        if sel == 1:                            
+            Q_Drama()                    
+        elif sel == 2:
+            Q_Horror()
+        elif sel == 3:
+            Q_Comedy()
+        elif sel == 4:
+            Q_Adventure()
+        elif sel == 5:
+            Q_Action()
+        elif sel == 6:
+            x = input("To check out the top 3 rated movies in Horror, input the value A. \n To check out the top 3 rated movies in Drama, input B.\n  To check out the top 3 rated movies in Comedy, input C. \n To check out the top 3 rated movies in Adventure, input D. \n  To check out the top 3 rated Action movies, input E \n To return back to the main menu, input Q.")
+            if x == "A":                            
+                H_Ratings()
+            if x == "B":
+                D_Ratings()
+            if x == "C":
+                C_Ratings()
+            if x == "D":
+                AC_Ratings()
+            if x == "E":
+                AD_Ratings()
+            if x == "Q":
+                break 
+            #x = str(input("\nSelection: "))       # take the user input for the selection
+    
+        elif sel == 7:
+            print("I hope you've enjoyed your exploration! Have a good day!")
+            break                               
+        else:
+            print("Sorry!  That input is not recognized")
+
+startup() 
