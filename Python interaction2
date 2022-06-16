@@ -58,9 +58,29 @@ def AC_Ratings():
     for x in mycursor:
         print(x)
 
+#mycursor = mydb.cursor()
+
+#sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+#val = ("John", "Highway 21")
+#mycursor.execute(sql, val)
+
+#mydb.commit()
+
+#print(mycursor.rowcount, "record inserted.")
+def New_Review():
+    r_title = input ("Enter the movie name:")
+    r_release_year = input("Enter the release year:")
+    r_genre = input("Enter the genre:") 
+    sql = "INSERT INTO movies (title, release_year, genre) VALUES (%s, %s, %s)"
+    val = (r_title, r_release_year, r_genre)
+    mycursor.execute(sql, val)
+    db.commit()
+    print("record inserted.")
+
+
 def startup():                                  
     while True:                               
-        print("Ahoy, there! To see a list of movies available, please select a genre to explore. \n Please input a number between 1-5. \n If you would like to see the top rated movies of each genre please input 6. \n Or input 7 if you wish to leave.")  
+        print("Ahoy, there! To see a list of movies available, please select a genre to explore. \n Please input a number between 1-5. \n If you would like to see the top rated movies of each genre please input 6. \n If you would like to input a rating input 7. \n Or input 7 if you wish to leave.")  
         print("\t1. Drama")
         print("\t2. Horror")
         print("\t3. Comedy")
@@ -69,9 +89,17 @@ def startup():
         print("\t6. Top_Rated")
         print("\t7. Quit")
         
+
         while True:
             try:
-                sel = int(input("\nSelection: "))       # take the user input for the selection
+                sel = int(input("\nSelection: "))
+                
+                #r_title = input ("Enter the movie name")
+                #r_release_year = input("Enter the release year")
+                #r_genre = input("Enter the genre")   
+                # mycursor.execute("insert into movies")
+                # "(title,release_year, genre)" 
+                # "values(r_title,r_release_year,r_genre)" )    # take the user input for the selection
             except ValueError:
                 print(ValueError)
                 print("Please Enter a digit from 1-6:")
@@ -100,10 +128,13 @@ def startup():
             if x == "E":
                 AD_Ratings()
             if x == "Q":
-                break 
+                break  
             #x = str(input("\nSelection: "))       # take the user input for the selection
-    
+
         elif sel == 7:
+            New_Review()
+
+        elif sel == 8:
             print("I hope you've enjoyed your exploration! Have a good day!")
             break                               
         else:
