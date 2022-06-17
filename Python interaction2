@@ -1,3 +1,4 @@
+from colorama import Cursor
 import mysql.connector
 
 db = mysql.connector.connect(
@@ -6,7 +7,11 @@ db = mysql.connector.connect(
     passwd="Thidwick108*",
     database="movie_ratings_project"
 )
+
 mycursor = db.cursor()
+#mycursor = db.cursor(buffered=True)
+
+
 def Q_Drama():
     mycursor.execute('select title, genre from movies where genre = "drama";')
     for x in mycursor:
@@ -58,24 +63,27 @@ def AC_Ratings():
     for x in mycursor:
         print(x)
 
-#mycursor = mydb.cursor()
 
-#sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-#val = ("John", "Highway 21")
-#mycursor.execute(sql, val)
-
-#mydb.commit()
-
-#print(mycursor.rowcount, "record inserted.")
 def New_Review():
     r_title = input ("Enter the movie name:")
     r_release_year = input("Enter the release year:")
-    r_genre = input("Enter the genre:") 
+    r_genre = input("Enter the genre:")
     sql = "INSERT INTO movies (title, release_year, genre) VALUES (%s, %s, %s)"
     val = (r_title, r_release_year, r_genre)
     mycursor.execute(sql, val)
     db.commit()
     print("record inserted.")
+    r_movie_id = mycursor.execute("SELECT MAX(id) from movies;")
+    print(r_movie_id)
+    r_reviewer_id = int(input("Please enter your user ID:"))
+    r_rating = input("Enter rating:")
+    sql1 = "INSERT INTO ratings(movie_id, reviewer_id, rating) VALUES (%s, %s, %s)"
+    val2 = (r_movie_id, r_reviewer_id, r_rating)
+    mycursor.execute(sql1, val2)
+    db.commit()
+
+    
+    
 
 
 def startup():                                  
@@ -87,19 +95,13 @@ def startup():
         print("\t4. Adventure")
         print("\t5. Action")
         print("\t6. Top_Rated")
-        print("\t7. Quit")
+        print("\t7. Create_a_Review")
+        print("\t8. Quit")
         
 
         while True:
             try:
-                sel = int(input("\nSelection: "))
-                
-                #r_title = input ("Enter the movie name")
-                #r_release_year = input("Enter the release year")
-                #r_genre = input("Enter the genre")   
-                # mycursor.execute("insert into movies")
-                # "(title,release_year, genre)" 
-                # "values(r_title,r_release_year,r_genre)" )    # take the user input for the selection
+                sel = int(input("\nSelection: "))  # take the user input for the selection
             except ValueError:
                 print(ValueError)
                 print("Please Enter a digit from 1-6:")
